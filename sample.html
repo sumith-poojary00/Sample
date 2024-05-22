@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamburger Menu with Fullscreen Overlay</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+
+  .menu-icon {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 30px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .menu-icon div {
+    width: 100%;
+    height: 4px;
+    background-color: darkorchid;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .menu-icon.open div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .menu-icon.open div:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-icon.open div:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .menu.show {
+    display: flex;
+    opacity: 1;
+  }
+
+  .menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    margin: 10px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .menu.show a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .menu .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .section {
+    display: none;
+    padding: 20px;
+    margin-left: 45%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="menu-icon" onclick="toggleMenu()">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+
+<div class="menu" id="menu">
+  <div class="close-btn" onclick="toggleMenu()">X</div>
+  <a href="#" onclick="showSection('home')">Home</a>
+  <a href="#" onclick="showSection('content')">Content</a>
+  <a href="#" onclick="showSection('about')">About</a>
+</div>
+
+<div id="home" class="section">Home Section</div>
+<div id="content" class="section">Content Section</div>
+<div id="about" class="section">About Section</div>
+
+<script>
+  function toggleMenu() {
+    var menu = document.getElementById("menu");
+    var menuIcon = document.querySelector('.menu-icon');
+    menu.classList.toggle("show");
+    menuIcon.classList.toggle("open");
+  }
+
+  function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(function(section) {
+      section.classList.remove('visible');
+    });
+    document.getElementById(sectionId).classList.add('visible');
+    toggleMenu();
+  }
+</script>
+
+</body>
+</html>
